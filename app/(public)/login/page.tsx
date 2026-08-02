@@ -1,11 +1,11 @@
 'use client'
 
-import { useActionState } from 'react'
+import { Suspense, useActionState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { signIn, resendConfirmationEmail, type AuthState } from '@/app/actions/auth'
 
-export default function LoginPage() {
+function LoginContent() {
   const searchParams = useSearchParams()
   const confirmationFailed = searchParams.get('error') === 'confirmation_failed'
 
@@ -22,9 +22,7 @@ export default function LoginPage() {
     state && 'error' in state && state.error === 'email_not_confirmed'
 
   return (
-    <main>
-      <h1>Log in</h1>
-
+    <>
       {confirmationFailed && (
         <p>Confirmation link is invalid or has expired. Please try again or request a new one.</p>
       )}
@@ -88,6 +86,17 @@ export default function LoginPage() {
       <p>
         Don&apos;t have an account? <Link href="/signup">Sign up</Link>
       </p>
+    </>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <main>
+      <h1>Log in</h1>
+      <Suspense>
+        <LoginContent />
+      </Suspense>
     </main>
   )
 }
