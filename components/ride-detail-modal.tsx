@@ -24,7 +24,7 @@ export function RideDetailModal({ ride, open, onClose, onEdit }: RideDetailModal
   function handleDelete() {
     startTransition(async () => {
       const result = await deleteRide(ride!.id)
-      if (result && 'error' in result) toast(result.error, 'error')
+      if (result && 'error' in result) toast(result.error ?? 'Something went wrong.', 'error')
       else toast('Ride deleted.', 'success')
       onClose()
     })

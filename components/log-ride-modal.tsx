@@ -33,7 +33,7 @@ export function LogRideModal({ coaster, open, onClose }: LogRideModalProps) {
     setError(null)
     startTransition(async () => {
       const result = await logRide(undefined, formData)
-      if (result && 'error' in result) setError(result.error)
+      if (result && 'error' in result) setError(result.error ?? 'Something went wrong.')
       else {
         toast('Ride logged!', 'success')
         onClose()

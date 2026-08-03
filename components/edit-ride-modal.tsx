@@ -35,7 +35,7 @@ export function EditRideModal({ ride, open, onClose }: EditRideModalProps) {
     setError(null)
     startTransition(async () => {
       const result = await updateRide(undefined, formData)
-      if (result && 'error' in result) setError(result.error)
+      if (result && 'error' in result) setError(result.error ?? 'Something went wrong.')
       else {
         toast('Ride updated.', 'success')
         onClose()

@@ -16,7 +16,7 @@ export function PrivacyToggle({ isPrivate }: { isPrivate: boolean }) {
       const result = await updatePrivacy(!next)
       if (result && 'error' in result) {
         setShowOnBoard(!next)
-        toast(result.error, 'error')
+        toast(result.error ?? 'Something went wrong.', 'error')
       } else {
         toast(next ? 'Now public — you\'re on the leaderboard.' : 'Now private — hidden from the leaderboard.', 'success')
       }

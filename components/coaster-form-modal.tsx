@@ -84,7 +84,7 @@ export function CoasterFormModal({ coaster, coasters, open, onClose }: CoasterFo
     setError(null)
     startTransition(async () => {
       const result = await (isEdit ? updateCoaster : createCoaster)(undefined, formData)
-      if (result && 'error' in result) setError(result.error)
+      if (result && 'error' in result) setError(result.error ?? 'Something went wrong.')
       else {
         toast(isEdit ? 'Coaster updated.' : 'Coaster added to the catalogue.', 'success')
         onClose()

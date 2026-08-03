@@ -21,7 +21,7 @@ export function RideList({ rides }: { rides: RideWithCoaster[] }) {
     startTransition(async () => {
       const result = await deleteRide(rideId)
       setConfirmId(null)
-      if (result && 'error' in result) toast(result.error, 'error')
+      if (result && 'error' in result) toast(result.error ?? 'Something went wrong.', 'error')
       else toast('Ride deleted.', 'success')
     })
   }
