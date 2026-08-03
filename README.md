@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Credit Count
 
-## Getting Started
+A web app for rollercoaster enthusiasts to log the coasters they've ridden, track personal stats, and compete on a public leaderboard.
 
-First, run the development server:
+Built with Next.js 16 (App Router), Supabase, and Tailwind CSS v4. Deployed on Vercel.
+
+---
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router), React 19, TypeScript |
+| Styling | Tailwind CSS v4 |
+| Backend / Auth | Supabase (PostgreSQL + Auth + RLS) |
+| Deployment | Vercel |
+
+---
+
+## Local development
+
+### Prerequisites
+
+- Node.js 20+
+- A Supabase project (free tier is fine)
+- Supabase CLI: `npm install -g supabase`
+
+### 1. Clone and install
+
+```bash
+git clone <repo-url>
+cd credit-count
+npm install
+```
+
+### 2. Environment variables
+
+Create `.env.local` at the project root:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<your-project>.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<your-publishable-key>
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+> `SUPABASE_SECRET_KEY` is intentionally **not** required — every feature works through authenticated sessions + RLS. Keep it in `.env.local` only if you need it for local scripts; never set it in Vercel.
+
+### 3. Apply database migrations
+
+```bash
+supabase login
+supabase link --project-ref <your-project-ref>
+supabase db push
+```
+
+This applies all migrations in `supabase/migrations/` in order.
+
+### 4. Seed the catalogue
+
+Supabase's CLI doesn't seed a remote project directly — `db push`
+only applies migrations. Load the initial catalogue by opening the
+**SQL Editor** in your Supabase dashboard, pasting the full contents
+of `supabase/seed.sql`, and running it once.
+
+> `seed.sql` uses plain INSERT statements with no ON CONFLICT guard —
+> only run it against an empty catalogue. Running it twice will
+> duplicate every coaster.
+
+### 5. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Roles
 
-## Learn More
+| Role | How to assign |
+|---|---|
+| `enthusiast` | Default for all sign-ups |
+| `admin` | Set `role = 'admin'` on the user's row in the `profiles` table via the Supabase dashboard |
 
-To learn more about Next.js, take a look at the following resources:
+There is no self-serve admin sign-up. Role assignment is manual and intentional.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+app/
+  (app)/            # Authenticated routes (dashboard, catalog, rides, admin)
+  auth/confirm/     # Route Handler — exchanges PKCE code for session
+  page.tsx          # Public leaderboard
+components/
+  ui/               # Design system (Button, Card, Modal, Table, Badge, Toast…)
+lib/
+  supabase/         # Browser + server Supabase clients
+  types.ts
+supabase/
+  migrations/       # Versioned SQL migrations
+  seed.sql          # Initial coaster catalogue
+docs/
+  TDD.md            # Full Technical Design Document
+  database.md       # DB schema, RLS policies, triggers, functions
+  api-security-tests.local.sh  # Curl-based security validation script
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Database
+
+See [`docs/database.md`](docs/database.md) for the full schema, RLS policies, triggers, and SQL functions.

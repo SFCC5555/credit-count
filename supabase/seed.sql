@@ -1,6 +1,7 @@
--- Seed catalogue: 45 real coasters across 12 countries, 13 manufacturers, 3 types.
--- Intended to make stats (by country / manufacturer / type) and the leaderboard
--- supabase db reset truncates public tables before seeding automatically.
+-- Seed catalogue: 45 real coasters across 12 countries, 13 manufacturers,
+-- 3 types, so stats (by country/manufacturer/type) and the leaderboard
+-- have meaningful data to demo. Plain INSERTs — safe to run once against
+-- an empty catalogue only.
 
 insert into public.coasters (name, park, country, manufacturer, type) values
 
