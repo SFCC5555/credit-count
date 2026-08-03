@@ -19,7 +19,7 @@ export default function SignupPage() {
   const succeeded = state && 'message' in state
 
   return (
-    <main className="flex flex-1 items-center justify-center min-h-screen py-12 px-4">
+    <main className="flex flex-1 items-center justify-center py-12 px-4">
       <div className="w-full max-w-sm space-y-6">
         <div className="text-center">
           <p className="font-display text-4xl font-extrabold tracking-tight text-ink">

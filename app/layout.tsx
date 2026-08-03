@@ -28,9 +28,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${barlowCondensed.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${barlowCondensed.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-paper text-ink font-sans">
+      <body className="min-h-screen flex flex-col bg-paper text-ink font-sans">
         <Providers>
           {children}
           <Footer />

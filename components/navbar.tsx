@@ -152,7 +152,9 @@ export function Navbar({ displayName, role }: NavbarProps) {
                       ? isAdmin
                         ? 'bg-cyan-50 text-brand-cyan border-brand-cyan'
                         : 'bg-pink-50 text-ink border-magenta'
-                      : 'text-gray-500 border-transparent hover:bg-gray-50 hover:text-ink',
+                      : isAdmin
+                        ? 'text-brand-cyan/70 border-transparent hover:bg-cyan-50 hover:text-brand-cyan'
+                        : 'text-gray-500 border-transparent hover:bg-gray-50 hover:text-ink',
                   )}
                 >
                   {label}
