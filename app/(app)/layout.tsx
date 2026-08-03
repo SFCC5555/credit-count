@@ -1,10 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { Navbar } from '@/components/navbar'
 
-// Defense-in-depth: the proxy already redirects unauthenticated users before
-// rendering, but this layout re-checks server-side at render time to catch any
-// edge case where the proxy matcher doesn't apply (e.g. a new protected route
-// added without updating the PROTECTED list in proxy.ts).
 export default async function AppLayout({
   children,
 }: {
@@ -17,5 +14,16 @@ export default async function AppLayout({
 
   if (!user) redirect('/login')
 
-  return <>{children}</>
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('display_name, role')
+    .eq('id', user.id)
+    .single()
+
+  return (
+    <>
+      <Navbar displayName={profile?.display_name} role={profile?.role} />
+      {children}
+    </>
+  )
 }
