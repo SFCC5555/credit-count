@@ -46,7 +46,7 @@ export function CoasterAdminList({ coasters }: { coasters: Coaster[] }) {
         if (result.error === 'fk_violation') {
           toast("Can't delete — this coaster has ride history. Edit it instead if you need to fix details.", 'error')
         } else {
-          toast(result.error, 'error')
+          toast(result.error ?? 'Something went wrong.', 'error')
         }
       } else {
         toast('Coaster deleted.', 'success')

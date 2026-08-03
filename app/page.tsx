@@ -80,15 +80,23 @@ export default async function LeaderboardPage() {
               <TableBody>
                 {rows.map((row, i) => {
                   const rank = i + 1
+                  const isMe = !!profile?.display_name && row.display_name === profile.display_name
                   return (
-                    <TableRow key={`${row.display_name}-${i}`}>
+                    <TableRow key={`${row.display_name}-${i}`} className={isMe ? 'bg-magenta/10 hover:!bg-magenta/[0.14]' : undefined}>
                       <Td className="w-20 text-center px-4 py-3">
                         <span className={`font-display font-extrabold tabular-nums ${rankSize(rank)} ${medalColors[rank] ?? 'text-gray-300'}`}>
                           {rank}
                         </span>
                       </Td>
                       <Td className={rank <= 3 ? 'font-semibold text-ink' : 'font-medium'}>
-                        {row.display_name}
+                        <span className="flex items-center gap-2">
+                          {row.display_name}
+                          {isMe && (
+                            <span className="text-xs font-medium text-magenta/80 bg-magenta/10 border border-magenta/20 px-2 py-px rounded-full">
+                              you
+                            </span>
+                          )}
+                        </span>
                       </Td>
                       <Td className="text-center px-4 py-3">
                         <span className="font-display text-xl font-bold text-magenta tabular-nums">
