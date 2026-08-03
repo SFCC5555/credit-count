@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 # API-level security validation — maps to SOW Acceptance Criteria.
-# Run from the project root: bash docs/api-security-tests.sh
-# Fill in the token/UUID placeholders before running the authenticated tests.
+#
+# Usage (run from project root):
+#
+#   Step 1 — visitor tests only (no credentials needed):
+#     bash docs/api-security-tests.local.sh 2>/dev/null | grep -A3 "TEST [123]"
+#
+#   Step 2 — get JWTs (fill in emails/passwords first):
+#     bash docs/api-security-tests.local.sh 2>/dev/null | grep -A2 "GET.*TOKEN"
+#
+#   Step 3 — full suite (fill in all placeholders first):
+#     bash docs/api-security-tests.local.sh 2>/dev/null
+#
+# Fill in the placeholders in api-security-tests.local.sh before running.
 
 set -a
 source .env.local
@@ -15,7 +26,7 @@ PASSWORD_ADMIN="PASTE_ADMIN_PASSWORD_HERE"
 TOKEN_ENTHUSIAST="PASTE_ENTHUSIAST_JWT_HERE"
 TOKEN_ADMIN="PASTE_ADMIN_JWT_HERE"
 UUID_ENTHUSIAST="PASTE_ENTHUSIAST_PROFILE_UUID_HERE"
-UUID_OTHER_USER="PASTE_OTHER_USER_PROFILE_UUID_HERE"
+UUID_ADMIN="PASTE_ADMIN_PROFILE_UUID_HERE"
 UUID_ANY_COASTER="PASTE_ANY_COASTER_UUID_HERE"
 
 
@@ -76,7 +87,7 @@ curl -s -X POST "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/rides" \
   -H "apikey: $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
   -H "Authorization: Bearer $TOKEN_ENTHUSIAST" \
   -H "Content-Type: application/json" \
-  -d "{\"user_id\":\"$UUID_OTHER_USER\",\"coaster_id\":\"$UUID_ANY_COASTER\",\"ride_date\":\"2026-01-01\"}"
+  -d "{\"user_id\":\"$UUID_ADMIN\",\"coaster_id\":\"$UUID_ANY_COASTER\",\"ride_date\":\"2026-01-01\"}"
 
 # ── Test 6: Enthusiast cannot create a coaster (SOW AC #4) ───────────────────
 # Expected: 403
