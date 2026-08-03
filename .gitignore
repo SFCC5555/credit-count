@@ -40,5 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 docs/TDD.md
+docs/api-security-tests.local.sh
 CLAUDE.local.md
 !.env.example
