@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Barlow_Condensed } from 'next/font/google'
 import { Providers } from '@/components/providers'
+import { Footer } from '@/components/footer'
 import './globals.css'
 
 const geistSans = Geist({
@@ -30,7 +31,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink font-sans">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

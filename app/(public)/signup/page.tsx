@@ -112,6 +112,12 @@ export default function SignupPage() {
             Log in
           </Link>
         </p>
+
+        <p className="text-center text-sm text-gray-400">
+          <Link href="/" className="hover:text-gray-600 transition-colors">
+            &larr; Back to leaderboard
+          </Link>
+        </p>
       </div>
     </main>
   )
