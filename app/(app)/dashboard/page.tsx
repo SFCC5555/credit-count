@@ -72,11 +72,7 @@ export default async function DashboardPage() {
             <h1 className="font-display text-3xl font-bold text-ink">
               Welcome, {profile?.display_name ?? 'Enthusiast'}
             </h1>
-            <p className="text-sm text-gray-400 mt-1">
-              {totalRides === 0
-                ? 'Log your first ride to get started.'
-                : `${totalRides} ride${totalRides !== 1 ? 's' : ''} logged.`}
-            </p>
+            <p className="text-sm text-gray-400 mt-1">Your credits and stats.</p>
           </div>
           <DashboardLogButton />
         </div>
