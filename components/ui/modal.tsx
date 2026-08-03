@@ -33,7 +33,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
   if (!open) return null
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* backdrop */}
       <div
         className="fixed inset-0 bg-ink/40 backdrop-blur-sm"

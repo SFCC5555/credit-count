@@ -1,23 +1,40 @@
+import { createClient } from '@/lib/supabase/server'
 import { Container } from '@/components/container'
-import { EmptyState } from '@/components/ui/empty-state'
+import { CoasterList } from './coaster-list'
+import { type Coaster } from '@/lib/types'
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const [coastersRes, ridesRes] = await Promise.all([
+    supabase
+      .from('coasters')
+      .select('id, name, park, country, manufacturer, type, created_at')
+      .order('name'),
+    supabase
+      .from('rides')
+      .select('coaster_id')
+      .eq('user_id', user!.id),
+  ])
+
+  const coasters = (coastersRes.data ?? []) as Coaster[]
+
+  const rideCounts: Record<string, number> = {}
+  for (const r of ridesRes.data ?? []) {
+    rideCounts[r.coaster_id] = (rideCounts[r.coaster_id] ?? 0) + 1
+  }
+
   return (
     <main className="flex-1 py-8">
       <Container>
-        <div className="mb-8">
-          <h1 className="font-display text-3xl font-bold text-ink">Catalogue</h1>
-          <p className="text-sm text-gray-400 mt-1">Browse the coaster catalogue.</p>
+        <div className="mb-6">
+          <div className="flex items-baseline gap-3">
+            <h1 className="font-display text-3xl font-bold text-ink">Rollercoaster Catalogue</h1>
+            <span className="text-base text-gray-500">{coasters.length} coasters in the database.</span>
+          </div>
         </div>
-        <EmptyState
-          icon={
-            <svg className="h-12 w-12" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
-            </svg>
-          }
-          title="Catalogue coming in Step 7"
-          description="You'll be able to browse and search all coasters here."
-        />
+        <CoasterList coasters={coasters} rideCounts={rideCounts} />
       </Container>
     </main>
   )

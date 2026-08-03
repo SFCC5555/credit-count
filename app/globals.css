@@ -42,6 +42,46 @@ summary {
   animation: toast-in 0.2s ease-out forwards;
 }
 
+@keyframes breathe-shadow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 79, 168, 0.45); }
+  50%       { box-shadow: 0 0 0 7px rgba(245, 79, 168, 0); }
+}
+
+@keyframes breathe-shadow-subtle {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 79, 168, 0.35); }
+  50%       { box-shadow: 0 0 0 5px rgba(245, 79, 168, 0); }
+}
+
+.animate-breathe-shadow {
+  animation: breathe-shadow 3s ease-in-out infinite;
+}
+
+.animate-breathe-shadow-subtle {
+  animation: breathe-shadow-subtle 2.8s ease-in-out infinite;
+}
+
+tr:hover .breathe-on-row-hover {
+  animation: breathe-shadow-subtle 2.8s ease-in-out infinite;
+}
+
+@keyframes breathe-border {
+  0%, 100% { box-shadow: 0 0 0 2.5px rgba(245, 79, 168, 0.45); }
+  50%       { box-shadow: 0 0 0 1px rgba(245, 79, 168, 0.15); }
+}
+
+.animate-breathe-border {
+  animation: breathe-border 3s ease-in-out infinite;
+}
+
+@keyframes breathe-color {
+  0%, 100% { color: #F54FA8; }
+  50%       { color: rgba(245, 79, 168, 0.85); }
+}
+
+.animate-breathe-color {
+  animation: breathe-color 3s ease-in-out infinite;
+}
+
 .animate-shimmer {
   background: linear-gradient(
     90deg,

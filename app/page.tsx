@@ -12,7 +12,13 @@ interface LeaderboardRow {
   credits: number
 }
 
-const medals: Record<number, string> = { 1: '▲', 2: '▲', 3: '▲' }
+function rankSize(rank: number) {
+  if (rank === 1) return 'text-2xl'
+  if (rank === 2) return 'text-xl'
+  if (rank === 3) return 'text-lg'
+  return 'text-base'
+}
+
 const medalColors: Record<number, string> = {
   1: 'text-yellow-500',
   2: 'text-zinc-400',
@@ -48,9 +54,14 @@ export default async function LeaderboardPage() {
 
           {/* Header */}
           <div className="text-center mb-10">
-            <h1 className="font-display text-5xl font-extrabold tracking-tight text-ink">
-              Leaderboard
-            </h1>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <h1 className="font-display text-5xl font-extrabold tracking-tight text-ink">
+                Leaderboard
+              </h1>
+              <svg className="h-9 w-9 text-ink" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path fillRule="evenodd" d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 00-.584.859 6.753 6.753 0 006.138 5.6 6.73 6.73 0 002.743 1.346A6.707 6.707 0 019.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 00-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 00.75-.75 2.25 2.25 0 00-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 01-1.112-3.173 6.73 6.73 0 002.743-1.347 6.753 6.753 0 006.139-5.6.75.75 0 00-.585-.858 47.077 47.077 0 00-3.07-.543V2.62a.75.75 0 00-.658-.744 49.798 49.798 0 00-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 00-.657.744zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 013.16 5.337a45.6 45.6 0 012.006-.343v.256zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 01-2.863 3.207 6.72 6.72 0 00.857-3.294z" clipRule="evenodd" />
+              </svg>
+            </div>
             <p className="text-sm text-gray-400 mt-2">
               Public credit counts — only enthusiasts who opted in.
             </p>
@@ -58,12 +69,12 @@ export default async function LeaderboardPage() {
 
           {/* Table */}
           {rows.length > 0 ? (
-            <Table>
+            <Table wrapperClassName="animate-breathe-border">
               <TableHead>
                 <TableRow>
-                  <Th className="w-14 text-center">#</Th>
+                  <Th className="w-20 !text-center px-4 py-3">#</Th>
                   <Th>Enthusiast</Th>
-                  <Th className="text-right pr-6">Credits</Th>
+                  <Th className="!text-center px-4 py-3">Credits</Th>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -71,19 +82,15 @@ export default async function LeaderboardPage() {
                   const rank = i + 1
                   return (
                     <TableRow key={`${row.display_name}-${i}`}>
-                      <Td className="text-center">
-                        {rank <= 3 ? (
-                          <span className={`text-xs font-bold ${medalColors[rank]}`}>
-                            {rank}
-                          </span>
-                        ) : (
-                          <span className="text-gray-300 tabular-nums text-sm">{rank}</span>
-                        )}
+                      <Td className="w-20 text-center px-4 py-3">
+                        <span className={`font-display font-extrabold tabular-nums ${rankSize(rank)} ${medalColors[rank] ?? 'text-gray-300'}`}>
+                          {rank}
+                        </span>
                       </Td>
                       <Td className={rank <= 3 ? 'font-semibold text-ink' : 'font-medium'}>
                         {row.display_name}
                       </Td>
-                      <Td className="text-right pr-6">
+                      <Td className="text-center px-4 py-3">
                         <span className="font-display text-xl font-bold text-magenta tabular-nums">
                           {row.credits}
                         </span>

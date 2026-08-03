@@ -3,10 +3,11 @@ import { cn } from '@/lib/utils'
 export function Table({
   children,
   className,
+  wrapperClassName,
   ...props
-}: React.TableHTMLAttributes<HTMLTableElement>) {
+}: React.TableHTMLAttributes<HTMLTableElement> & { wrapperClassName?: string }) {
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+    <div className={cn('w-full overflow-x-auto rounded-xl border border-gray-100 shadow-sm', wrapperClassName)}>
       <table
         className={cn('w-full text-sm text-ink border-collapse', className)}
         {...props}
