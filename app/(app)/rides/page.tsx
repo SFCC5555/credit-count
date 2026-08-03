@@ -13,6 +13,7 @@ export default async function RidesPage() {
     .select('id, coaster_id, ride_date, note, created_at, coasters(id, name, park, country, type, manufacturer)')
     .eq('user_id', user!.id)
     .order('ride_date', { ascending: false })
+    .order('created_at', { ascending: false })
 
   const rides = (data ?? []) as unknown as RideWithCoaster[]
 

@@ -79,7 +79,7 @@ tr:hover .breathe-on-row-hover-cyan {
 
 @keyframes breathe-color {
   0%, 100% { color: #F54FA8; }
-  50%       { color: rgba(245, 79, 168, 0.85); }
+  50%       { color: rgba(245, 79, 168, 0.7); }
 }
 
 .animate-breathe-color {
@@ -104,4 +104,20 @@ tr:hover .breathe-on-row-hover-cyan {
   );
   background-size: 200% 100%;
   animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* Thin scrollbar for breakdown cards */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #e5e7eb;
+  border-radius: 9999px;
 }
