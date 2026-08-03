@@ -42,9 +42,9 @@ const icons: Record<ToastType, React.ReactNode> = {
 }
 
 const typeStyles: Record<ToastType, string> = {
-  success: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-  error:   'bg-red-50 text-red-800 border-red-200',
-  info:    'bg-blue-50 text-blue-800 border-blue-200',
+  success: 'bg-white text-emerald-700 border-emerald-200',
+  error:   'bg-white text-red-600 border-red-200',
+  info:    'bg-white text-blue-600 border-blue-200',
 }
 
 function Toast({ item, onRemove }: { item: ToastItem; onRemove: (id: string) => void }) {

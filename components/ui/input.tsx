@@ -30,7 +30,7 @@ export function Input({ label, error, helper, id, className, type, ...props }: I
             'transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0',
             error
               ? 'border-red-400 focus:ring-red-300'
-              : 'border-gray-200 focus:border-magenta focus:ring-magenta/20',
+              : 'border-gray-200 hover:border-magenta focus:border-magenta focus:ring-magenta/20',
             'disabled:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60',
             isPassword && 'pr-10',
             className,

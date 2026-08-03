@@ -63,7 +63,7 @@ export default async function LeaderboardPage() {
               </svg>
             </div>
             <p className="text-sm text-gray-400 mt-2">
-              Public credit counts — only enthusiasts who opted in.
+              Rollercoaster credits — only enthusiasts who opted in.
             </p>
           </div>
 

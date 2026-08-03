@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { logRide } from '@/app/actions/rides'
 import { localDateString } from '@/lib/utils'
+import { useToast } from '@/components/ui/toast'
 import { type Coaster } from '@/lib/types'
 
 interface LogRideModalProps {
@@ -19,6 +20,7 @@ const today = () => localDateString()
 export function LogRideModal({ coaster, open, onClose }: LogRideModalProps) {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
+  const { toast } = useToast()
 
   useEffect(() => {
     if (open) setError(null)
@@ -32,7 +34,10 @@ export function LogRideModal({ coaster, open, onClose }: LogRideModalProps) {
     startTransition(async () => {
       const result = await logRide(undefined, formData)
       if (result && 'error' in result) setError(result.error)
-      else onClose()
+      else {
+        toast('Ride logged!', 'success')
+        onClose()
+      }
     })
   }
 
@@ -61,7 +66,7 @@ export function LogRideModal({ coaster, open, onClose }: LogRideModalProps) {
           <textarea
             name="note"
             rows={2}
-            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-ink placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-magenta/20 focus:border-magenta transition-colors resize-none"
+            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-ink placeholder:text-gray-400 hover:border-magenta focus:outline-none focus:ring-2 focus:ring-magenta/20 focus:border-magenta transition-colors resize-none"
             placeholder="Any thoughts about this ride?"
           />
         </div>

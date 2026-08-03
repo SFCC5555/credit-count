@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import { Modal } from '@/components/ui/modal'
 import { Button } from '@/components/ui/button'
+import { useToast } from '@/components/ui/toast'
 import { deleteRide } from '@/app/actions/rides'
 import { type RideWithCoaster } from '@/lib/types'
 
@@ -16,12 +17,15 @@ interface RideDetailModalProps {
 export function RideDetailModal({ ride, open, onClose, onEdit }: RideDetailModalProps) {
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
 
   if (!ride) return null
 
   function handleDelete() {
     startTransition(async () => {
-      await deleteRide(ride!.id)
+      const result = await deleteRide(ride!.id)
+      if (result && 'error' in result) toast(result.error, 'error')
+      else toast('Ride deleted.', 'success')
       onClose()
     })
   }

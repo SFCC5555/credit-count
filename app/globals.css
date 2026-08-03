@@ -64,6 +64,10 @@ tr:hover .breathe-on-row-hover {
   animation: breathe-shadow-subtle 2.8s ease-in-out infinite;
 }
 
+tr:hover .breathe-on-row-hover-cyan {
+  animation: breathe-shadow-cyan 2.8s ease-in-out infinite;
+}
+
 @keyframes breathe-border {
   0%, 100% { box-shadow: 0 0 0 2.5px rgba(245, 79, 168, 0.45); }
   50%       { box-shadow: 0 0 0 1px rgba(245, 79, 168, 0.15); }
@@ -80,6 +84,15 @@ tr:hover .breathe-on-row-hover {
 
 .animate-breathe-color {
   animation: breathe-color 3s ease-in-out infinite;
+}
+
+@keyframes breathe-shadow-cyan {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(24, 197, 220, 0.45); }
+  50%       { box-shadow: 0 0 0 7px rgba(24, 197, 220, 0); }
+}
+
+.animate-breathe-shadow-cyan {
+  animation: breathe-shadow-cyan 3s ease-in-out infinite;
 }
 
 .animate-shimmer {

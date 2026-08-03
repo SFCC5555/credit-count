@@ -2,16 +2,24 @@
 
 import { useState, useTransition } from 'react'
 import { updatePrivacy } from '@/app/actions/rides'
+import { useToast } from '@/components/ui/toast'
 
 export function PrivacyToggle({ isPrivate }: { isPrivate: boolean }) {
   const [showOnBoard, setShowOnBoard] = useState(!isPrivate)
   const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
 
   function toggle() {
     const next = !showOnBoard
     setShowOnBoard(next)
     startTransition(async () => {
-      await updatePrivacy(!next)
+      const result = await updatePrivacy(!next)
+      if (result && 'error' in result) {
+        setShowOnBoard(!next)
+        toast(result.error, 'error')
+      } else {
+        toast(next ? 'Now public — you\'re on the leaderboard.' : 'Now private — hidden from the leaderboard.', 'success')
+      }
     })
   }
 
@@ -34,7 +42,6 @@ export function PrivacyToggle({ isPrivate }: { isPrivate: boolean }) {
       <span className="text-sm text-gray-600">
         {showOnBoard ? 'Public — visible on the leaderboard' : 'Private — not on the leaderboard'}
       </span>
-      {isPending && <span className="text-xs text-gray-400">Saving…</span>}
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { EditRideModal } from '@/components/edit-ride-modal'
 import { RideDetailModal } from '@/components/ride-detail-modal'
 import { EmptyState } from '@/components/ui/empty-state'
+import { useToast } from '@/components/ui/toast'
 import { deleteRide } from '@/app/actions/rides'
 import { type RideWithCoaster } from '@/lib/types'
 
@@ -14,11 +15,14 @@ export function RideList({ rides }: { rides: RideWithCoaster[] }) {
   const [editRide, setEditRide] = useState<RideWithCoaster | null>(null)
   const [confirmId, setConfirmId] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
 
   function handleDelete(rideId: string) {
     startTransition(async () => {
-      await deleteRide(rideId)
+      const result = await deleteRide(rideId)
       setConfirmId(null)
+      if (result && 'error' in result) toast(result.error, 'error')
+      else toast('Ride deleted.', 'success')
     })
   }
 
